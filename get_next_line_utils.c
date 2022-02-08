@@ -3,14 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joteixei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: joteixei <joteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/05 15:59:05 by joteixei          #+#    #+#             */
-/*   Updated: 2021/11/08 16:10:13 by joteixei         ###   ########.fr       */
+/*   Created: 2022/02/03 15:21:36 by joteixei          #+#    #+#             */
+/*   Updated: 2022/02/03 17:00:10 by joteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+size_t	ft_strlen(const char *str)
+{
+	int	count;
+
+	count = 0;
+	while (str[count] != '\0')
+		count++;
+	return (count);
+}
+
+
+char	*ft_strchr(const char *s, int c)
+{
+	int	index;
+
+	if (s)
+	{
+		index = 0;
+		if (s[index] == (char)c)
+			return ((char *)s);
+		while (s[index++])
+			if (s[index] == (char)c)
+				return ((char *)s + index);
+	}
+	return (NULL);
+}
+
 
 void	*ft_memcpy(void *dest, const void *source, size_t num)
 {
@@ -25,16 +53,6 @@ void	*ft_memcpy(void *dest, const void *source, size_t num)
 		index++;
 	}
 	return (dest);
-}
-
-size_t	ft_strlen(const char *str)
-{
-	size_t	count;
-
-	count = 0;
-	while (str[count] != '\0')
-		count++;
-	return (count);
 }
 
 char	*ft_strdup(const char *src)
@@ -59,22 +77,6 @@ char	*ft_strdup(const char *src)
 		}
 		str[index] = '\0';
 		return (str);
-	}
-	return (NULL);
-}
-
-char	*ft_strchr(const char *str, int c)
-{
-	int	index;
-
-	if (str)
-	{
-		index = 0;
-		if (str[index] == (char)c)
-			return ((char *)str);
-		while (str[index++])
-			if (str[index] == (char)c)
-				return ((char *)str + index);
 	}
 	return (NULL);
 }

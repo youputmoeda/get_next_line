@@ -3,114 +3,114 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joteixei <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: joteixei <joteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/08 16:12:49 by joteixei          #+#    #+#             */
-/*   Updated: 2021/11/08 16:24:23 by joteixei         ###   ########.fr       */
+/*   Created: 2022/02/03 20:36:08 by joteixei          #+#    #+#             */
+/*   Updated: 2022/02/08 02:00:09 by joteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-static char	*gnl_trim(char **store, char **buf, int len)
+static char	*gnl_trim(char **storage, char **buffer, int len)
 {
-	char	*ret;
+	char	*result;
 	char	*tmp;
 	int		i;
 
-	if (*store)
-		i = ft_strlen(*store);
+	if (*storage)
+		i = ft_strlen(*storage);
 	else
 		i = 0;
-	ret = malloc((len + i + 1) * sizeof(char));
-	if (!ret)
+	result = malloc(sizeof(char) * (len + i + 1));
+	if (!result)
 		return (0);
-	ft_memcpy(ret, *store, i);
-	ft_memcpy(ret + i, *buf, len);
-	ret[len + i] = '\0';
-	tmp = ft_strdup((*buf) + len);
-	if (*store)
-		free(*store);
-	*store = tmp;
-	return (ret);	
+	ft_memcpy(result, *storage, i);
+	ft_memcpy(result + i, *buffer, len);
+	result[len + i] = '\0';
+	tmp = ft_strdup((*buffer) + len);
+	if (*storage)
+		free(*storage);
+	*storage = tmp;
+	return (result);
 }
 
-static char	*gnl_get(char **store, int len)
+static char	*gnl_get(char **storage, int len)
 {
-	char	*ret;
+	char	*result;
 	char	*tmp;
 	int		i;
 
-	ret = malloc((len + 1) * sizeof(char));
-	if (!ret)
+	result = malloc(sizeof(char) * (len + 1));
+	if (!result)
 		return (NULL);
 	i = 0;
 	while (i != len)
 	{
-		ret[i] = (*store)[i];
+		result[i] = (*storage)[i];
 		i++;
 	}
-	ret[i] = '\0';
-	tmp = ft_strdup(*store + i);
-	free(*store);
-	(*store) = tmp;
-	return (ret);
+	result[i] = '\0';
+	tmp = ft_strdup(*storage + i);
+	free(*storage);
+	(*storage) = tmp;
+	return (result);
 }
 
-static char	*gnl_main(char **store, char **buf, int r)
+static char	*gnl_main(char **storage, char **buff, int i)
 {
-	char	*ret;
+	char	*result;
 	char	*tmp;
 
-	ret = NULL;
-	if (r <= 0)
+	result = NULL;
+	if (i <= 0)
 	{
-		if (r == 0 && *store)
+		if (i == 0 && *storage)
 		{
-			ret = (*store);
-			(*store) = NULL;
+			result = (*storage);
+			(*storage) = NULL;
 		}
-		return (ret);
+		return (result);
 	}
-	(*buf)[r] = '\0';
-	tmp = ft_strchr(*buf, '\n');
+	(*buff)[i] = '\0';
+	tmp = ft_strchr(*buff, '\n');
 	if (tmp)
-		ret = gnl_trim(store, buf, (tmp - *buf) + 1);
+		result = gnl_trim(storage, buff, (tmp - *buff) + 1);
 	else
 	{
-		tmp = ft_strjoin(*store, *buf);
-		if (*store)
-			free(*store);
-		*store = tmp;
+		tmp = ft_strjoin(*storage, *buff);
+		if (*storage)
+			free(*storage);
+		*storage = tmp;
 	}
-	return (ret);
+	return (result);
 }
 
 char	*get_next_line(int fd)
 {
 	static char	*storage[1024];
 	char		*buffer;
-	char		*line;
-	int			r;
+	char		*line_text;
+	int			i;
 
 	if ((read(fd, 0, 0) == -1) || fd < 0 || fd > 1024 || BUFFER_SIZE <= 0)
 		return (NULL);
-	r = 1;
-	line = NULL;
+	i = 1;
+	line_text = NULL;
 	buffer = ft_strchr(storage[fd], '\n');
 	if (!buffer)
 	{
-		buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
+		buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 		if (!buffer)
 			return (0);
-		while (line == NULL && r > 0)
+		while (line_text == NULL && i > 0)
 		{
-			r = read(fd, buffer, BUFFER_SIZE);
-			line = gnl_main(&storage[fd], &buffer, r);
+			i = read(fd, buffer, BUFFER_SIZE);
+			line_text = gnl_main(&storage[fd], &buffer, i);
 		}
 		free(buffer);
 	}
 	else
-		line = gnl_get(&storage[fd], (buffer - storage[fd]) + 1);
-	return (line);
+		line_text = gnl_get(&storage[fd], (buffer - storage[fd]) + 1);
+	return (line_text);
 }
