@@ -6,10 +6,9 @@
 /*   By: joteixei <joteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 20:39:45 by joteixei          #+#    #+#             */
-/*   Updated: 2022/02/03 20:40:14 by joteixei         ###   ########.fr       */
+/*   Updated: 2022/02/09 16:39:31 by joteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef GET_NEXT_LINE_BONUS_H
 # define GET_NEXT_LINE_BONUS_H

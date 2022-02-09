@@ -6,7 +6,7 @@
 /*   By: joteixei <joteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/03 15:21:36 by joteixei          #+#    #+#             */
-/*   Updated: 2022/02/03 17:00:10 by joteixei         ###   ########.fr       */
+/*   Updated: 2022/02/09 16:39:30 by joteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ size_t	ft_strlen(const char *str)
 		count++;
 	return (count);
 }
-
 
 char	*ft_strchr(const char *s, int c)
 {
@@ -38,7 +37,6 @@ char	*ft_strchr(const char *s, int c)
 	}
 	return (NULL);
 }
-
 
 void	*ft_memcpy(void *dest, const void *source, size_t num)
 {
